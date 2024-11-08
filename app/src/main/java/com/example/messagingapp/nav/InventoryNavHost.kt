@@ -20,7 +20,7 @@ fun InventoryNavHost(
         modifier = modifier
     ) {
         composable(route = AnalyticsDestination.route) {
-            chat(webSocketListeners = WebSocketListeners)
+           
         }
         }
 }
