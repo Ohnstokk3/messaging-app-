@@ -5,9 +5,10 @@ import com.example.messagingapp.MainViewModel
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import javax.inject.Inject
 
 
-class WebSocketListeners(
+class WebSocketListeners  @Inject constructor(
     private val viewModel: MainViewModel
 ): WebSocketListener() {
 

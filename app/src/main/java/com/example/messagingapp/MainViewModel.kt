@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @OptIn(SavedStateHandleSaveableApi::class)
 @HiltViewModel
-class MainViewModel@Inject constructor(
-    webSocketListener:WebSocketListeners
+class MainViewModel @Inject constructor(
+
 ) : ViewModel() {
 private val _socketStatus = MutableLiveData(false)
 val socketStatus: LiveData<Boolean> = _socketStatus
