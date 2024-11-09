@@ -4,11 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import com.example.messagingapp.service.WebSocketListeners
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@OptIn(SavedStateHandleSaveableApi::class)
+@HiltViewModel
+class MainViewModel@Inject constructor(
+    webSocketListener:WebSocketListeners
+) : ViewModel() {
 private val _socketStatus = MutableLiveData(false)
 val socketStatus: LiveData<Boolean> = _socketStatus
 
