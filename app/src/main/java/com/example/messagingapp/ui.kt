@@ -49,23 +49,24 @@ private var webSocket: WebSocket? = null
 @Composable
 fun chat(webSocketListeners:WebSocketListeners){
 
-    var text by remember { mutableStateOf("") }
+
 Row(modifier = Modifier
     .fillMaxWidth()
     .fillMaxSize()
     .padding(bottom = 70.dp, start = 10.dp),
     verticalAlignment = Alignment.Bottom
 ) {
+    var text by remember { mutableStateOf("") }
+
     TextField(
         value = text,
         onValueChange = { text = it },
-        label = { Text("your message")
-        },
-        shape = RoundedCornerShape(18.dp)
+        label = { Text("Label") }
     )
     Spacer(modifier = Modifier.size(7.dp))
     Button(onClick = {
         webSocket = okHttpClient.newWebSocket(createRequest(), webSocketListeners)
+        webSocket?.send("$text ")
     }) {
         Icon(
             Icons.Default.Send,
