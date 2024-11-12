@@ -1,5 +1,8 @@
 package com.example.messagingapp
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,27 +11,29 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import com.example.messagingapp.service.WebSocketListeners
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+data class empoyeeState(
+    val text:String="",
+)
 @OptIn(SavedStateHandleSaveableApi::class)
 @HiltViewModel
 class MainViewModel @Inject constructor(
 
 ) : ViewModel() {
-private val _socketStatus = MutableLiveData(false)
-val socketStatus: LiveData<Boolean> = _socketStatus
+     val _webSocketData = MutableStateFlow<WebSocketData?>(null)
+    val webSocketData: StateFlow<WebSocketData?> = _webSocketData
 
-private val _messages = MutableLiveData<Pair<Boolean, String>>()
-val messages: LiveData<Pair<Boolean, String>> = _messages
+    var state by mutableStateOf(empoyeeState())
 
-fun addMessage(message: Pair<Boolean, String>) = viewModelScope.launch(Dispatchers.Main) {
-    if (_socketStatus.value == true) {
-        _messages.value = message
+    fun ChangeName(text: String) {
+        state = state.copy(
+            text = text
+        )
     }
-}
 
-fun setStatus(status: Boolean) = viewModelScope.launch(Dispatchers.Main) {
-    _socketStatus.value = status
 }
-}
+data class WebSocketData(val message: String)

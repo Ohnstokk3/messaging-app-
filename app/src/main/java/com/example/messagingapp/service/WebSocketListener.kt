@@ -2,6 +2,7 @@ package com.example.messagingapp.service
 
 import android.util.Log
 import com.example.messagingapp.MainViewModel
+import com.example.messagingapp.WebSocketData
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
@@ -16,14 +17,14 @@ class WebSocketListeners  @Inject constructor(
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
-        viewModel.setStatus(true)
+
         webSocket.send("Android Device Connected")
         Log.d(TAG, "onOpen:")
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
-        viewModel.addMessage(Pair(false, text))
+        viewModel._webSocketData.value = WebSocketData(text)
         Log.d(TAG, "onMessage: $text")
     }
 
@@ -34,7 +35,7 @@ class WebSocketListeners  @Inject constructor(
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
-        viewModel.setStatus(false)
+
         Log.d(TAG, "onClosed: $code $reason")
     }
 
