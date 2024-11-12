@@ -56,6 +56,8 @@ fun chat(webSocketListeners:WebSocketListeners,viewModels: MainViewModel= hiltVi
     val webSocketData by viewModels.webSocketData.collectAsState()
     Column(modifier = Modifier.padding(top = 200.dp)) {
         Text(text = webSocketData?.message ?: "No data received")
+        Spacer(modifier = Modifier.size(7.dp))
+        Text(text = "${viewModels.state.text}")
     }
 Row(modifier = Modifier
     .fillMaxWidth()
